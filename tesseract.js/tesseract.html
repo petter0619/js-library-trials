@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Tesseract JS CDN -->
+    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+</head>
+<body style="display: grid; justify-content: center;">
+    <img src="./chiss-quote.JPG" alt="test" width="600" style="margin: 20px; justify-self: center;">
+    
+    <form style="display: grid;">
+        <textarea name="image-text" id="" cols="100" rows="10" style="margin-bottom: 20px; width: 100%"></textarea>
+        <button type="submit" style="width: max-content">Get text from image</button>
+    </form>
+    <!-- Javascript -->
+    <script>
+        const form = document.querySelector('form');
+        const textarea = form.querySelector('textarea');
+
+        // const tesseractExampleImg = 'https://tesseract.projectnaptha.com/img/eng_bw.png';
+        // const dropboxImg = 'https://www.dropbox.com/s/v0y12wchoiz6ebz/IMG_1603.JPG?raw=1';
+
+        const handleSubmit = e => {
+            e.preventDefault();
+            // Tesseract JS
+            Tesseract.recognize(
+                './chiss-quote.JPG',
+                'eng',
+                { logger: m => console.log(m) }
+            ).then(({ data: { text } }) => {
+                console.log(text);
+                textarea.value = text;
+            })
+        }
+
+        form.addEventListener('submit', handleSubmit);
+    </script>
+</body>
+</html>
